@@ -19,4 +19,4 @@ jobs:
     - name: Obtendo arquivo da tarefa
       run: aws ecs describe-task-definition --task-definition Tarefa_API-Go --query taskDefinition > task-definition.json
 
-      
+    
