@@ -20,7 +20,6 @@ func main() {
 	// 2. Pegar variáveis de ambiente
 	host := os.Getenv("DBHOST")
 	user := os.Getenv("DBUSER")
-	password := os.Getenv("DBPASSWORD")
 	dbname := os.Getenv("DBNAME")
 	dbport := os.Getenv("DBPORT")
 	port := os.Getenv("PORT")
