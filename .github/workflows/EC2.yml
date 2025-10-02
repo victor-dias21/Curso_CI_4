@@ -23,22 +23,32 @@ jobs:
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
         TARGET: /home/${{ secrets.REMOTE_USER }}
         EXCLUDE: "postgres-data"
+
+    - name: Create .env file
+      run: |
+        echo "DBHOST=${{ secrets.DBHOST }}" >> .env
+        echo "DBUSER=${{ secrets.DBUSER }}" >> .env
+        echo "DBPASSWORD=${{ secrets.DBPASSWORD }}" >> .env
+        echo "DBNAME=${{ secrets.DBNAME }}" >> .env
+        echo "DBPORT=${{ secrets.DBPORT }}" >> .env
+        echo "PORT=8000" >> .env
+    
         
-    - name: executing remote ssh commands using password
+    - name: Deploy to EC2
       uses: appleboy/ssh-action@v1
       with:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 22
+        envs: DBHOST,DBUSER,DBPASSWORD,DBNAME,DBPORT,PORT
         script: |
-          export HOST=${{ secrets.DBHOST }}
-          export USER=${{ secrets.DBUSER }}
-          export PASSWORD=${{ secrets.DBPASSWORD }}
-          export DBNAME=${{ secrets.DBNAME }}
-          export DBPORT=${{ secrets.DBPORT }}
-          export PORT=8000
-          chmod +x main
           nohup ./main > nohup.out 2> nohup.err < /dev/null &
+      env:
+        DBHOST: ${{ secrets.DBHOST }}
+        DBUSER: ${{ secrets.DBUSER }}
+        DBPASSWORD: ${{ secrets.DBPASSWORD }}
+        DBNAME: ${{ secrets.DBNAME }}
+        DBPORT: ${{ secrets.DBPORT }}
+        PORT: 8000
         
         
