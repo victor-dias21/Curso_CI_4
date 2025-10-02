@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Download a Build Artifact
-      uses: actions/download-artifact@v3.0.0
+      uses: actions/download-artifact@v4
       with:
     # Artifact name
         name: programa
@@ -25,7 +25,7 @@ jobs:
         EXCLUDE: "postgres-data"
         
     - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v1
       with:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USER }}
