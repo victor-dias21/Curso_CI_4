@@ -42,13 +42,14 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         envs: DBHOST,DBUSER,DBPASSWORD,DBNAME,DBPORT,PORT
         script: |
-          nohup ./main > nohup.out 2> nohup.err < /dev/null &
-      env:
-        DBHOST: ${{ secrets.DBHOST }}
-        DBUSER: ${{ secrets.DBUSER }}
-        DBPASSWORD: ${{ secrets.DBPASSWORD }}
-        DBNAME: ${{ secrets.DBNAME }}
-        DBPORT: ${{ secrets.DBPORT }}
-        PORT: 8000
+          nohup env \
+            DBHOST=${{ secrets.DBHOST }} \
+            DBUSER=${{ secrets.DBUSER }} \
+            DBPASSWORD=${{ secrets.DBPASSWORD }} \
+            DBNAME=${{ secrets.DBNAME }} \
+            DBPORT=${{ secrets.DBPORT }} \
+            PORT=8000 \
+            ./main > nohup.out 2> nohup.err < /dev/null &
+
         
         
