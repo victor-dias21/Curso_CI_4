@@ -26,7 +26,7 @@ jobs:
       with:
         task-definition: task-definition.json
         container-name: Go
-        image: victordias21/ci_cd:Projeto_Inicial
+        image: victordias21/ci_cd:projeto_inicial
         environment-variables: |
           DBHOST=${{ secrets.DBHOST }}
           DBUSER=${{ secrets.DBUSER }}
