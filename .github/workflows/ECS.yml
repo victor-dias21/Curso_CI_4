@@ -27,4 +27,18 @@ jobs:
         task-definition: task-definition.json
         container-name: Go
         image: victordias21/ci_cd:Projeto_Inicial
-        environment-variables: "LOG_LEVEL=info"
+        environment-variables: |
+          DBHOST=${{ secrets.DBHOST }}
+          DBUSER=${{ secrets.DBUSER }}
+          DBPASSWORD=${{ secrets.DBPASSWORD }}
+          DBNAME=${{ secrets.DBNAME }}
+          DBPORT=${{ secrets.DBPORT }}
+          PORT=8000
+          
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: Tarefa_API-Go-service-vt0nccew
+        cluster: API-Go
+        wait-for-service-stability: true
